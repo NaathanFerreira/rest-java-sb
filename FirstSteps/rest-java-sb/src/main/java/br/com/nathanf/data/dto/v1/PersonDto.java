@@ -1,55 +1,25 @@
-package br.com.nathanf.model;
+package br.com.nathanf.data.dto.v1;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "person")
-public class Person implements Serializable {
+public class PersonDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name = "first_name", nullable = false, length = 80)
 	private String firstName;
-	
-	@Column(name = "last_name", nullable = false, length = 80)
 	private String lastName;
-	
-	@Column(nullable = false, length = 100)
 	private String address;
-	
-	@Column(nullable = false, length = 6)
 	private String gender;
 	
-	public Person(long id, String firstName, String lastName, String address, String gender) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.gender = gender;
-	}
-	
-	public Person() {
-		
-	}
+	public PersonDto() {}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -98,7 +68,7 @@ public class Person implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Person other = (Person) obj;
+		PersonDto other = (PersonDto) obj;
 		return Objects.equals(address, other.address) && Objects.equals(firstName, other.firstName)
 				&& Objects.equals(gender, other.gender) && id == other.id && Objects.equals(lastName, other.lastName);
 	}

@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.nathanf.data.dto.v1.PersonDto;
+import br.com.nathanf.data.dto.v2.PersonDtoV2;
 import br.com.nathanf.exceptions.ResourceNotFoundException;
 import br.com.nathanf.mapper.DozerMapper;
+import br.com.nathanf.mapper.custom.PersonMapper;
 import br.com.nathanf.model.Person;
 import br.com.nathanf.repositories.PersonRepository;
 
@@ -19,6 +21,9 @@ public class PersonServices {
 	
 	@Autowired
 	PersonRepository repository;
+	
+	@Autowired
+	PersonMapper mapper;
 	
 	public List<PersonDto> findAll() {
 		logger.info("Finding all people");
@@ -36,6 +41,13 @@ public class PersonServices {
 		logger.info("Creating a person");
 		Person personEntity = DozerMapper.parseObject(person, Person.class);
 		PersonDto personDto = DozerMapper.parseObject(repository.save(personEntity), PersonDto.class);
+		return personDto;
+	}
+	
+	public PersonDtoV2 createV2(PersonDtoV2 person) {
+		logger.info("Creating a person with V2");
+		Person personEntity = mapper.convertDtoToEntity(person);
+		PersonDtoV2 personDto = mapper.convertEntityToDto(repository.save(personEntity));
 		return personDto;
 	}
 	

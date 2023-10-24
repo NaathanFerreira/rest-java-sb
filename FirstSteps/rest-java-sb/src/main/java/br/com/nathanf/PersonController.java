@@ -3,7 +3,6 @@ package br.com.nathanf;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,35 +16,51 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.nathanf.data.dto.v1.PersonDto;
 import br.com.nathanf.data.dto.v2.PersonDtoV2;
 import br.com.nathanf.services.PersonServices;
+import br.com.nathanf.util.MediaType;
 
 @RestController
 @RequestMapping("/person")
 public class PersonController {
 	
+	
 	@Autowired
 	private PersonServices service;
 	
-	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/{id}", 
+			produces = { MediaType.APPLICATION_JSON, 
+						MediaType.APPLICATION_XML,
+						MediaType.APPLICATION_YML })
 	public PersonDto findById(@PathVariable(value = "id") Long id ){
 		return service.findById(id);
 	}
 	
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(produces = { MediaType.APPLICATION_JSON, 
+							MediaType.APPLICATION_XML,
+							MediaType.APPLICATION_YML })
 	public List<PersonDto> findAll(){
 		return service.findAll();
 	}
 	
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(consumes = MediaType.APPLICATION_JSON, 
+			produces = { MediaType.APPLICATION_JSON, 
+						MediaType.APPLICATION_XML,
+						MediaType.APPLICATION_YML })
 	public PersonDto create(@RequestBody PersonDto person){
 		return service.create(person);
 	}
 	
-	@PostMapping(value = "/v2", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/v2", consumes = MediaType.APPLICATION_JSON, 
+			produces = { MediaType.APPLICATION_JSON, 
+						MediaType.APPLICATION_XML,
+						MediaType.APPLICATION_YML })
 	public PersonDtoV2 createV2(@RequestBody PersonDtoV2 person){
 		return service.createV2(person);
 	}
 	
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(consumes = MediaType.APPLICATION_JSON, 
+			produces = { MediaType.APPLICATION_JSON, 
+						MediaType.APPLICATION_XML,
+						MediaType.APPLICATION_YML })
 	public PersonDto update(@RequestBody PersonDto person){
 		return service.update(person);
 	}
